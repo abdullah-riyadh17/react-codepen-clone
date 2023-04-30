@@ -11,7 +11,7 @@ const Header = () => {
     return (
        <Container position='static'>
         <Toolbar>
-          <img src={logo} style={{width:35}} alt="logo"/>
+          <img src={logo} style={{width:30, height: 20}} alt="logo"/>
         </Toolbar>
        </Container>
     );

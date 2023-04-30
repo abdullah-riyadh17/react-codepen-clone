@@ -8,7 +8,7 @@ import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import "../App.css";
 
 const Heading = styled(Box)`
@@ -25,37 +25,55 @@ justify-content: space-between;
 font-weight: 700;
 
 `
-const Editor = () => {
+const Container = styled(Box)`
+flex-grow: 1;
+flex-basic: 0;
+display: flex;
+flex-direction: column;
+padding: 0px 8px 8px;
+
+`
+const Editor = ({heading, icon, color, value, onChange}) => {
+    const [open, setOpen]= useState(true);
+    const handleChange =(editor, data, value)=>{
+        onChange(value);
+
+    }
     return (
-        <Box>
+        <Container style= {open ? null : {flexGrow: 0}}>
             <Header>
                 <Heading>
                     <Box component="span" style={{
-                        background:"red", height: 20,
+                        background: color, height: 20,
                         width: 20,
                         display: 'flex',
                         placeContent: 'center',
                         borderRadius: 5,
                         marginRight: 5,
-                        paddingBottom:2
+                        paddingBottom:2,
+                        color:"#000"
 
                     }}>
-                        /
+                        {icon}
 
                     </Box>
-                    HTML
+                   {heading}
                 </Heading>
-                <CloseFullscreenIcon/>
+                <CloseFullscreenIcon 
+                fontSize='small'
+                style={{alignSelf: "center"}}
+                onClick={()=>setOpen(prevState=>!prevState)}/>
               
 
             </Header>
 
             <ControlledEditor className='controlled-editor'
+            value={value} onBeforeChange={handleChange}
             options={{
                 theme: 'material',
                 lineNumbers: true,
             }}/>
-        </Box>
+        </Container>
     );
 };
 
